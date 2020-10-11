@@ -1,0 +1,45 @@
+name: centos-base
+
+on:
+  push:
+
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: packer
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # fix backwards incompatibilities in template
+      - name: Fix Template
+        uses: operatehappy/packer-github-actions@master
+        with:
+          command: fix
+
+      # validate templates
+      - name: Validate Template
+        uses: operatehappy/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: centos-base.json
+
+      # build artifact
+      - name: Build Artifact
+        uses: operatehappy/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-color=false -on-error=abort"
+          target: centos-base.json
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
