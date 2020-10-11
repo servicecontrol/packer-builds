@@ -17,6 +17,7 @@ jobs:
         uses: operatehappy/packer-github-actions@master
         with:
           command: fix
+          target: centos-base.json
 
       # validate templates
       - name: Validate Template
