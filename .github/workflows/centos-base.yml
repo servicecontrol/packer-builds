@@ -30,6 +30,9 @@ jobs:
       # build artifact
       - name: Build Artifact
         uses: ./.github/actions/packer/
+        env:
+          UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
+          UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
         with:
           command: build
           arguments: "-color=false -on-error=abort"
