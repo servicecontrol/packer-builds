@@ -1,0 +1,30 @@
+name: 'Container Image - Packer'
+
+on:
+  push:
+
+env:
+  ORG_NAME: servicecontrol
+  REPO_NAME: packer-builds
+  IMAGE_NAME: packer
+  REGISTRY: ghcr.io
+
+jobs:
+  build_container_image:
+    name: 'Packer container image'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.3.2
+
+      - name: Build & push Container image
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_PAT }}
+          registry: ${{ env.REGISTRY }}
+          image: ${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}
+          tag: latest
+          githubOrg: ${{ env.ORG_NAME }}
+          directory: container-image/packer
+          dockerfile: container-image/packer/Dockerfile
