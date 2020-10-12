@@ -26,11 +26,12 @@ jobs:
           command: validate
           arguments: -syntax-only
           target: centos-base.json
+      - name: echo pwd
+        run: echo $PWD
 
       # build artifact
       - name: Build Artifact
         uses: ./.github/actions/packer/
-        working-directory: ./
         env:
           UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
           UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
