@@ -12,20 +12,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Fix Template
+      - name: Fix Packer Template
         uses: operatehappy/packer-github-actions@master
         with:
           command: fix
           target: centos-base-upcloud.json
 
-      - name: Validate Template
+      - name: Validate Packer Template
         uses: operatehappy/packer-github-actions@master
         with:
           command: validate
           arguments: -syntax-only
           target: centos-base-upcloud.json
 
-      - name: Build Artifact
+      - name: Build CentOS VM
         uses: ./.github/actions/packer/
         env:
           UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
@@ -35,3 +35,8 @@ jobs:
           command: build
           arguments: "-color=false -on-error=abort"
           target: centos-base-upcloud.json
+      - run: echo 01a5d2db-dd46-4203-9aef-0832a59d371f > 01a5d2db-dd46-4203-9aef-0832a59d371f 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: 01a5d2db-dd46-4203-9aef-0832a59d371f
+          path: 01a5d2db-dd46-4203-9aef-0832a59d371f
