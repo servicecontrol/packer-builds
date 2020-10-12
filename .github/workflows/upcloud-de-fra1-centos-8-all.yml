@@ -1,4 +1,4 @@
-name: 'Upcloud DE-Fra1 CentOS 8 HashiStack'
+name: 'Upcloud DE-FRA1 CentOS 8 HashiStack'
 
 on:
   push:
