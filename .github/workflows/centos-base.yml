@@ -38,7 +38,7 @@ jobs:
           arguments: "-color=false -on-error=abort"
           target: centos-base-upcloud.json
       - name: Export Storage UUID
-        run: cat packer-logs | grep "upcloud: Private" | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-base-image-uuid
+        run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-base-image-uuid"
       - uses: actions/upload-artifact@v2
         with:
           name: upcloud-centos-base-image-uuid
