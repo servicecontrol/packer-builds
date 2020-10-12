@@ -8,8 +8,6 @@ env:
   REPO_NAME: packer-builds
   IMAGE_NAME: packer
   REGISTRY: ghcr.io
-  IMAGE: "$ORG_NAME/$REPO_NAME/$IMAGE_NAME:$TAG" 
-  IMAGE_URI: "$REGISTRY/$ORG_NAME/$REPO_NAME/$IMAGE_NAME:$TAG" 
   UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
   UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
   UPCLOUD_ZONE: "de-fra1"
@@ -31,7 +29,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
           registry: "$REGISTRY"
-          image: "$IMAGE"
+          image: "$ORG_NAME/$REPO_NAME/$IMAGE_NAME"
           tag: latest
           githubOrg: "$ORG_NAME"
           directory: container-image/packer
