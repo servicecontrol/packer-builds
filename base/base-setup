@@ -1,0 +1,6 @@
+#!/bin/sh
+
+yum -y update
+yum -y install cloud-init
+echo {{ user `PUBLIC_SSH_KEY` }} | tee /root/.ssh/authorized_keys
+

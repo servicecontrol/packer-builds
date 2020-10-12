@@ -18,15 +18,10 @@
   "provisioners": [
     {
       "type": "shell",
-      "inline": [
-        "yum -y update",
-	"yum -y install cloud-init",
-	"echo {{ user `PUBLIC_SSH_KEY` }} | tee /root/.ssh/authorized_keys"
+      "scripts": [
+	      "base/base-setup",
+	      "vault/vault-install"
       ]
-    },
-    {
-      "type": "shell",
-      "script": "vault/vault-install"
     }
   ]
 }
