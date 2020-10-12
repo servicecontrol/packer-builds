@@ -54,7 +54,6 @@ jobs:
           PUBLIC_SSH_KEY: ${{ secrets.PUBLIC_SSH_KEY }}
         with:
           image: ghcr.io/servicecontrol/packer-builds/packer:latest
-          repo-token: ${{ secrets.GH_PAT }}
           command: build
           arguments: "-color=false -on-error=abort"
           target: upcloud-centos-8-base.json
