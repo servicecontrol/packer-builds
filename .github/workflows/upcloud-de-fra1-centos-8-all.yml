@@ -1,4 +1,4 @@
-name: 'CentOS 8 based images with HashiCorp products'
+name: 'Upcloud DE-Fra1 CentOS 8 HashiStack'
 
 on:
   push:
@@ -18,7 +18,7 @@ env:
 
 jobs:
   build_container_image:
-    name: Build Packer image with Upcloud Packer plugin
+    name: 'Packer container image'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.2
@@ -37,7 +37,7 @@ jobs:
   centos_base:
     runs-on: ubuntu-latest
     needs: build_container_image
-    name: 'Upcloud: CentOS 8 base image'
+    name: 'Upcloud CentOS 8 Base'
 
     outputs:
       uuid: ${{ steps.uuid.outputs.uuid }}
@@ -93,7 +93,7 @@ jobs:
   vault:
     runs-on: ubuntu-latest
     needs: [build_container_image, centos_base]
-    name: 'Upcloud: CentOS 8 based Vault image'
+    name: 'Upcloud CentOS 8 Vault'
 
     steps:
       - name: Checkout Repository

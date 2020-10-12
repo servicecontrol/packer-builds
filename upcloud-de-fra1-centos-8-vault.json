@@ -12,7 +12,7 @@
       "zone": "de-fra1",
       "storage_uuid": "{{ user `STORAGE_UUID` }}",
       "storage_size": 10,
-      "template_prefix": "centos-8-vault",
+      "template_prefix": "de-fra1-centos-8-vault",
       "ssh_private_keyfile": "./id_rsa",
       "ssh_public_keyfile": "./id_rsa.pub"
     }
