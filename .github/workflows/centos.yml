@@ -13,11 +13,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Store SSH keys
-        run: |
-          "echo ${{ secrets.PUBLIC_SSH_KEY }}"
-          "touch id_rsa.pub"
-          "echo ${{ secrets.PUBLIC_SSH_KEY }} > id_rsa.pub"
-          "touch id_rsa"
-          "echo ${{ secrets.PRIVATE_SSH_KEY }} > id_rsa"
+        env:
+          PUB: "${{ secrets.PUBLIC_SSH_KEY }}" 
+          PRI: "${{ secrets.PRIVATE_SSH_KEY }}"
+        run: | 
+          "echo ${{ env.PUB }} > id_rsa.pub"
+          "echo ${{ env.PRI }} > id_rsa"
 
 
