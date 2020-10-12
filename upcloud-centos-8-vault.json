@@ -1,7 +1,8 @@
 {
   "variables": {
     "UPCLOUD_USERNAME": "{{ env `UPCLOUD_API_USER` }}",
-    "UPCLOUD_PASSWORD": "{{ env `UPCLOUD_API_PASSWORD` }}"
+    "UPCLOUD_PASSWORD": "{{ env `UPCLOUD_API_PASSWORD` }}",
+    "PUBLIC_SSH_KEY": "{{ env `PUBLIC_SSH_KEY` }}"
   },
   "builders": [
     {
@@ -19,7 +20,7 @@
       "type": "shell",
       "inline": [
         "yum -y update",
-	"echo {{ env `PUBLIC_SSH_KEY` }} | tee /root/.ssh/authorized_keys"
+	"echo {{ user `PUBLIC_SSH_KEY` }} | tee /root/.ssh/authorized_keys"
       ]
     },
     {
