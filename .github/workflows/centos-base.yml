@@ -7,6 +7,7 @@ jobs:
   packer:
     runs-on: ubuntu-latest
     name: packer
+    
 
     steps:
       - name: Checkout Repository
@@ -26,10 +27,23 @@ jobs:
           command: validate
           arguments: -syntax-only
           target: centos-base.json
+      - name: echo pwd
+        run: | 
+          echo $PWD
+          ls -la
+      - name: echo pwd
+        working-directory: /
+        run: | 
+          echo $PWD
+          ls -la
 
       # build artifact
       - name: Build Artifact
         uses: ./.github/actions/packer/
+<<<<<<< HEAD
+=======
+        working-directory: /root
+>>>>>>> 1deec29023049f3355cf6cee1c10d50c752c5f3f
         env:
           UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
           UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
