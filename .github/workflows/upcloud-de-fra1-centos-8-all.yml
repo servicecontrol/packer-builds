@@ -73,6 +73,14 @@ jobs:
         run: |
           uuid=$(cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1)
           echo "::set-output name=uuid::$uuid"
+          echo $uuid > upcloud-de-fra1-centos-8-base-image-uuid
+
+      - name: Upload file containing UUID to Github artefacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: upcloud-de-fra1-centos-8-base-image-uuid
+          path: ./upcloud-de-fra1-centos-8-base-image-uuid
+
 
   vault:
     runs-on: ubuntu-latest
@@ -116,12 +124,17 @@ jobs:
         run: | 
           echo "$PUB" > id_rsa.pub
           echo "$PRI" > id_rsa
+      
+      - name: Get current base image UUID
+        uses: actions/download-artifact@v2
+        with:
+          name: upcloud-de-fra1-centos-8-base-image-uuid
 
       - name: Build CentOS VM
         uses: ./.github/actions/packer/
         with:
           command: build
-          arguments: "-color=false -on-error=abort -var STORAGE_UUID=${{ needs.centos_base.outputs.uuid }}"
+          arguments: "-color=false -on-error=abort -var STORAGE_UUID=$(cat upcloud-de-fra1-centos-8-base-image-uuid)"
           target: ${{ env.PACKER_TARGET }}
 
       - name: Export Storage UUID
