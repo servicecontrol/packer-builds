@@ -1,4 +1,4 @@
-name: centos-base
+name: 'CentOS 8 base images'
 
 on:
   push:
