@@ -12,12 +12,12 @@ jobs:
         name: Check out code
 
       - uses: mr-smithers-excellent/docker-build-push@v4
-        name: Build & push Docker image
+        name: Build & push Container image
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
           registry: ghcr.io
-          image: packer-builds/packer
+          image: servicecontrol/packer-builds/packer
           tag: latest
           githubOrg: servicecontrol
 
