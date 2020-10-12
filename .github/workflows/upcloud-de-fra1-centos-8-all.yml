@@ -41,7 +41,7 @@ jobs:
     name: 'Upcloud CentOS 8 Base'
 
     env:
-      PACKER_TARGET: "upcloud-${{ env.UPCLOUD_ZONE }}-centos-8-base.json"
+      PACKER_TARGET: "upcloud-de-fra1-centos-8-base.json"
 
     outputs:
       uuid: ${{ steps.uuid.outputs.uuid }}
@@ -100,7 +100,7 @@ jobs:
     name: 'Upcloud CentOS 8 Vault'
 
     env:
-       PACKER_TARGET: upcloud-${{ env.UPCLOUD_ZONE }}-centos-8-vault.json
+       PACKER_TARGET: "upcloud-de-fra1-centos-8-vault.json"
 
     steps:
       - name: Checkout Repository
