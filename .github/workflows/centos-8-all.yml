@@ -50,14 +50,14 @@ jobs:
         uses: operatehappy/packer-github-actions@master
         with:
           command: fix
-          target: upcloud-centos-8-base.json
+          target: upcloud-de-fra1-centos-8-base.json
 
       - name: Validate Packer Template
         uses: operatehappy/packer-github-actions@master
         with:
           command: validate
           arguments: -syntax-only
-          target: upcloud-centos-8-base.json
+          target: upcloud-de-fra1-centos-8-base.json
      
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -82,7 +82,7 @@ jobs:
         with:
           command: build
           arguments: "-color=false -on-error=abort"
-          target: upcloud-centos-8-base.json
+          target: upcloud-de-fra1-centos-8-base.json
 
       - name: Find and export storage UUID
         id: uuid
@@ -103,14 +103,14 @@ jobs:
         uses: operatehappy/packer-github-actions@master
         with:
           command: fix
-          target: upcloud-centos-8-vault.json
+          target: upcloud-de-fra1-centos-8-vault.json
 
       - name: Validate Packer Template
         uses: operatehappy/packer-github-actions@master
         with:
           command: validate
           arguments: -syntax-only
-          target: upcloud-centos-8-vault.json
+          target: upcloud-de-fra1-centos-8-vault.json
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -135,7 +135,7 @@ jobs:
         with:
           command: build
           arguments: "-color=false -on-error=abort -var STORAGE_UUID=${{ needs.centos_base.outputs.uuid }}"
-          target: upcloud-centos-8-vault.json
+          target: upcloud-de-fra1-centos-8-vault.json
 
       - name: Export Storage UUID
         run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-8-vault-image-uuid"
