@@ -15,8 +15,8 @@
       "storage_uuid": "{{ user `STORAGE_UUID` }}",
       "storage_size": 10,
       "template_prefix": "centos-8-vault",
-      "ssh_private_key": "./id_rsa",
-      "ssh_public_key": "./id_rsa.pub"
+      "ssh_private_keyfile": "./id_rsa",
+      "ssh_public_keyfile": "./id_rsa.pub"
     }
   ],
   "provisioners": [
