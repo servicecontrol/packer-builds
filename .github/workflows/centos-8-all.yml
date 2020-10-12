@@ -1,0 +1,103 @@
+name: 'CentOS 8 based images with HashiCorp products'
+
+on:
+  push:
+
+jobs:
+  build_image:
+    name: Build Packer image with Upcloud Packer plugin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.2
+        name: Check out code
+
+      - uses: mr-smithers-excellent/docker-build-push@v4
+        name: Build & push Docker image
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          image: packer-builds/packer
+          tag: latest
+          githubOrg: servicecontrol
+  centos-base:
+    runs-on: ubuntu-latest
+    name: 'Upcloud: CentOS 8 base image'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Fix Packer Template
+        uses: operatehappy/packer-github-actions@master
+        with:
+          command: fix
+          target: upcloud-centos-8-base.json
+
+      - name: Validate Packer Template
+        uses: operatehappy/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: upcloud-centos-8-base.json
+
+      - name: Build CentOS VM
+        uses: ./.github/actions/packer/
+        env:
+          UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
+          UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
+          PACKER_CONFIG_DIR: /opt
+          PACKER_LOG: 1
+          PACKER_LOG_PATH: packer-logs
+          PUBLIC_SSH_KEY: ${{ secrets.PUBLIC_SSH_KEY }}
+        with:
+          command: build
+          arguments: "-color=false -on-error=abort"
+          target: upcloud-centos-8-base.json
+      - name: Export Storage UUID
+        run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-8-base-image-uuid"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: upcloud-centos-8-base-image-uuid
+          path: ./upcloud-centos-8-base-image-uuid
+  vault:
+    runs-on: ubuntu-latest
+    name: 'Upcloud: CentOS 8 based Vault image'
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Fix Packer Template
+        uses: operatehappy/packer-github-actions@master
+        with:
+          command: fix
+          target: upcloud-centos-8-vault.json
+
+      - name: Validate Packer Template
+        uses: operatehappy/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: upcloud-centos-8-vault.json
+
+      - name: Build CentOS VM
+        uses: ./.github/actions/packer/
+        env:
+          UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
+          UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
+          PACKER_CONFIG_DIR: /opt
+          PACKER_LOG: 1
+          PACKER_LOG_PATH: packer-logs
+          PUBLIC_SSH_KEY: ${{ secrets.PUBLIC_SSH_KEY }}
+        with:
+          command: build
+          arguments: "-color=false -on-error=abort"
+          target: upcloud-centos-8-vault.json
+      - name: Export Storage UUID
+        run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-8-vault-image-uuid"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: upcloud-centos-8-vault-image-uuid
+          path: ./upcloud-centos-8-vault-image-uuid
+
