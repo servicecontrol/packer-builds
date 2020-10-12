@@ -9,7 +9,6 @@ env:
   IMAGE_NAME: packer
   REGISTRY: ghcr.io
   IMAGE: 
-  PACKER_CONFIG_DIR: /opt
   UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
   UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
   PACKER_CONFIG_DIR: /opt
@@ -135,7 +134,7 @@ jobs:
           arguments: "-color=false -on-error=abort -var UUID=${{ needs.centos_base.outputs.uuid }}"
           target: upcloud-centos-8-vault.json
 
-      - name: Export Storage UUIDs
+      - name: Export Storage UUID
         run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-8-vault-image-uuid"
 
       - name: Upload UUID as Github artifact 
