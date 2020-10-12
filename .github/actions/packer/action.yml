@@ -5,6 +5,10 @@ author: Kerim Satirli <kerim@operatehappy.com>
 description: Run Packer commands
 
 inputs:
+  image:
+    description: container image to use
+    required: true
+    default: 'Dockerfile'
   command:
     description: command to execute
     required: true
@@ -13,7 +17,7 @@ inputs:
   target:
     description: file(s) to target
     required: true
-    default: artifacts.pkr.json
+    default: build.json
 
 outputs:
   command:
@@ -21,8 +25,9 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'docker.pkg.github.com/servicecontrol/packer-builds/packer:latest'
-
+  #  image: 'docker.pkg.github.com/servicecontrol/packer-builds/packer:latest'
+  image: ${{ inputs.image }}
+ 
 branding:
   color: blue
   icon: package

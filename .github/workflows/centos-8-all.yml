@@ -20,6 +20,7 @@ jobs:
           image: packer-builds/packer
           tag: latest
           githubOrg: servicecontrol
+
   centos_base:
     runs-on: ubuntu-latest
     needs: build_image
@@ -52,15 +53,20 @@ jobs:
           PACKER_LOG_PATH: packer-logs
           PUBLIC_SSH_KEY: ${{ secrets.PUBLIC_SSH_KEY }}
         with:
+          image: docker.pkg.github.com/servicecontrol/packer-builds/packer:latest
           command: build
           arguments: "-color=false -on-error=abort"
           target: upcloud-centos-8-base.json
+
       - name: Export Storage UUID
         run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-8-base-image-uuid"
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload UUID as Github artifact
+        uses: actions/upload-artifact@v2
         with:
           name: upcloud-centos-8-base-image-uuid
           path: ./upcloud-centos-8-base-image-uuid
+
   vault:
     runs-on: ubuntu-latest
     needs: [build_image, centos_base]
@@ -96,9 +102,12 @@ jobs:
           command: build
           arguments: "-color=false -on-error=abort"
           target: upcloud-centos-8-vault.json
+
       - name: Export Storage UUID
         run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-8-vault-image-uuid"
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload UUID as Github artifact 
+        uses: actions/upload-artifact@v2
         with:
           name: upcloud-centos-8-vault-image-uuid
           path: ./upcloud-centos-8-vault-image-uuid
