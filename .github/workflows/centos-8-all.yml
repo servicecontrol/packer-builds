@@ -49,6 +49,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GH_PAT }}
+      - name: Pull image
+        run: docker pull ghcr.io/servicecontrol/packer-builds/packer:latest
 
       - name: Build CentOS VM
         uses: ./.github/actions/packer/
