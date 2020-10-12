@@ -29,7 +29,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
           registry: ${{ env.REGISTRY }}
-          image: "$ORG_NAME/$REPO_NAME/$IMAGE_NAME"
+          image: ${{ env.ORG_NAME/env.REPO_NAME/env.IMAGE_NAME }}
           tag: latest
           githubOrg: ${{ env.ORG_NAME }}
           directory: container-image/packer
