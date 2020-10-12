@@ -5,7 +5,7 @@ on:
 
 jobs:
   upcloud:
-    runs-on: [self-hosted]
+    runs-on: [arch]
     name: packer
 
     steps:
