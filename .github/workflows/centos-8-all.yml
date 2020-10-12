@@ -10,6 +10,9 @@ env:
   REGISTRY: ghcr.io
   IMAGE: 
   PACKER_CONFIG_DIR: /opt
+  UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
+  UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
+  PACKER_CONFIG_DIR: /opt
   PACKER_LOG: 1
   PACKER_LOG_PATH: packer-logs
 
@@ -67,23 +70,16 @@ jobs:
         run: docker pull ghcr.io/servicecontrol/packer-builds/packer:latest
 
       - name: Store SSH keys
-        run: |
-          "touch id_rsa.pub"
-          "echo ${{ secrets.PUBLIC_SSH_KEY }} > id_rsa.pub"
-          "touch id_rsa"
-          "echo ${{ secrets.PRIVATE_SSH_KEY }} > id_rsa"
+        env:
+          PUB: "${{ secrets.PUBLIC_SSH_KEY }}" 
+          PRI: "${{ secrets.PRIVATE_SSH_KEY }}"
+        run: | 
+          echo "$PUB" > id_rsa.pub
+          echo "$PRI" > id_rsa
 
       - name: Build CentOS VM
         uses: ./.github/actions/packer/
-        env:
-          UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
-          UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
-          PACKER_CONFIG_DIR: /opt
-          PACKER_LOG: 1
-          PACKER_LOG_PATH: packer-logs
-          PUBLIC_SSH_KEY: ${{ secrets.PUBLIC_SSH_KEY }}
         with:
-          image: ghcr.io/servicecontrol/packer-builds/packer:latest
           command: build
           arguments: "-color=false -on-error=abort"
           target: upcloud-centos-8-base.json
@@ -125,19 +121,15 @@ jobs:
         run: docker pull ghcr.io/servicecontrol/packer-builds/packer:latest
 
       - name: Store SSH keys
-        run: |
-          "echo ${{ secrets.PUBLIC_SSH_KEY }} > id_rsa.pub"
-          "echo ${{ secrets.PRIVATE_SSH_KEY }} > id_rsa"
+        env:
+          PUB: "${{ secrets.PUBLIC_SSH_KEY }}" 
+          PRI: "${{ secrets.PRIVATE_SSH_KEY }}"
+        run: | 
+          echo "$PUB" > id_rsa.pub
+          echo "$PRI" > id_rsa
 
       - name: Build CentOS VM
         uses: ./.github/actions/packer/
-        env:
-          UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
-          UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
-          PACKER_CONFIG_DIR: /opt
-          PACKER_LOG: 1
-          PACKER_LOG_PATH: packer-logs
-          PUBLIC_SSH_KEY: ${{ secrets.PUBLIC_SSH_KEY }}
         with:
           command: build
           arguments: "-color=false -on-error=abort -var UUID=${{ needs.centos_base.outputs.uuid }}"
