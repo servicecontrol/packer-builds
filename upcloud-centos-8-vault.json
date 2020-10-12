@@ -19,8 +19,8 @@
     {
       "type": "shell",
       "scripts": [
-	      "base/base-setup",
-	      "vault/vault-install"
+	 "base/base-setup",
+	 "vault/vault-install"
       ]
     }
   ]

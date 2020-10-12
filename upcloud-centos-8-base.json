@@ -17,7 +17,7 @@
   "provisioners": [
     {
       "type": "shell",
-      "script": "./bash/base-setup" 
+      "script": "./base/base-setup" 
     }
   ]
 }
