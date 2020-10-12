@@ -41,7 +41,7 @@ jobs:
     name: 'Upcloud CentOS 8 Base'
 
     env:
-      PACKER_TARGET: "upcloud-de-fra1-centos-8-base.json"
+      PACKER_TARGET: ./clouds/upcloud/upcloud-de-fra1-centos-8-base.json
 
     outputs:
       uuid: ${{ steps.uuid.outputs.uuid }}
@@ -100,7 +100,7 @@ jobs:
     name: 'Upcloud CentOS 8 Vault'
 
     env:
-       PACKER_TARGET: "upcloud-de-fra1-centos-8-vault.json"
+       PACKER_TARGET: ./clouds/upcloud/upcloud-de-fra1-centos-8-vault.json
 
     steps:
       - name: Checkout Repository
@@ -145,11 +145,11 @@ jobs:
           target: ${{ env.PACKER_TARGET }}
 
       - name: Export Storage UUID
-        run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-${{ env.UPCLOUD_ZONE }}-centos-8-vault-image-uuid"
+        run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-de.fra1-centos-8-vault-image-uuid"
 
       - name: Upload UUID as Github artifact 
         uses: actions/upload-artifact@v2
         with:
-          name: upcloud-${{ env.UPCLOUD_ZONE }}-centos-8-vault-image-uuid
-          path: ./upcloud-${{ env.UPCLOUD_ZONE }}-centos-8-vault-image-uuid
+          name: upcloud-de-fra1-centos-8-vault-image-uuid
+          path: ./upcloud-de-fra1-centos-8-vault-image-uuid
 
