@@ -135,7 +135,7 @@ jobs:
           arguments: "-color=false -on-error=abort -var UUID=${{ needs.centos_base.outputs.uuid }}"
           target: upcloud-centos-8-vault.json
 
-      - name: Export Storage UUID
+      - name: Export Storage UUIDs
         run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-8-vault-image-uuid"
 
       - name: Upload UUID as Github artifact 
