@@ -33,6 +33,7 @@ jobs:
           tag: latest
           githubOrg: ${{ env.ORG_NAME }}
           directory: container-image/packer
+          dockerfile: container-image/packer/Dockerfile
 
   centos_base:
     runs-on: ubuntu-latest
