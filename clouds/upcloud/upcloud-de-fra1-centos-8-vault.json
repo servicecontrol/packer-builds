@@ -22,7 +22,7 @@
     {
       "type": "shell",
       "scripts": [
-	 "../../scripts/vault/vault-install"
+	 "./scripts/vault/vault-install"
       ]
     }
   ]
