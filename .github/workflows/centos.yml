@@ -1,4 +1,4 @@
-name: 'CentOS 8 based images with HashiCorp products'
+name: 'ssh test'
 
 on:
   push:
@@ -6,11 +6,7 @@ on:
 jobs:
   centos_base:
     runs-on: ubuntu-latest
-    needs: build_container_image
-    name: 'Upcloud: CentOS 8 base image'
-
-    outputs:
-      uuid: ${{ steps.uuid.outputs.uuid }}
+    name: 'ssh test'
 
     steps:
       - name: Checkout Repository
