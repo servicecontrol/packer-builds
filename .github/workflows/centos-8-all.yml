@@ -68,7 +68,9 @@ jobs:
 
       - name: Store SSH keys
         run: |
+          "touch id_rsa.pub"
           "echo ${{ secrets.PUBLIC_SSH_KEY }} > id_rsa.pub"
+          "touch id_rsa"
           "echo ${{ secrets.PRIVATE_SSH_KEY }} > id_rsa"
 
       - name: Build CentOS VM
