@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source ./vault-build-config
+source ./vault/vault-build-config
 
 #VAULT_VERSION="1.4.2+ent"
 cd /tmp/
