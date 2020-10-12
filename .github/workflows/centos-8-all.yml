@@ -85,7 +85,9 @@ jobs:
 
       - name: Find and export storage UUID
         id: uuid
-        run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1"
+        run: |
+          uuid=$(cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1)
+          echo "::set-output name=uuid::$uuid"
 
   vault:
     runs-on: ubuntu-latest
