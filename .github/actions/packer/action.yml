@@ -18,6 +18,9 @@ inputs:
     description: file(s) to target
     required: true
     default: build.json
+  repo-token:
+    description: Github token to authenticate to Github packages
+    required: false
 
 outputs:
   command:
