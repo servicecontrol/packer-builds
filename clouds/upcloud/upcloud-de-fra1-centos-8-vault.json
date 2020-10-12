@@ -1,0 +1,29 @@
+{
+  "variables": {
+    "UPCLOUD_USERNAME": "{{ env `UPCLOUD_API_USER` }}",
+    "UPCLOUD_PASSWORD": "{{ env `UPCLOUD_API_PASSWORD` }}",
+    "UPCLOUD_ZONE": "de-fra1",
+    "STORAGE_UUID": "{{ env `STORAGE_UUID` }}"
+  },
+  "builders": [
+    {
+      "type": "upcloud",
+      "username": "{{ user `UPCLOUD_USERNAME` }}",
+      "password": "{{ user `UPCLOUD_PASSWORD` }}",
+      "zone": "{{ user `UPCLOUD_ZONE` }}",
+      "storage_uuid": "{{ user `STORAGE_UUID` }}",
+      "storage_size": 10,
+      "template_prefix": "{{ user `UPCLOUD_ZONE` }}-centos-8-vault",
+      "ssh_private_keyfile": "./id_rsa",
+      "ssh_public_keyfile": "./id_rsa.pub"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+	 "../../scripts/vault/vault-install"
+      ]
+    }
+  ]
+}
