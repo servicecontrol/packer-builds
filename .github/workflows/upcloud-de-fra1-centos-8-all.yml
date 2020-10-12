@@ -30,10 +30,10 @@ jobs:
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
-          registry: ghcr.io
-          image: $IMAGE 
+          registry: "$REGISTRY"
+          image: "$IMAGE"
           tag: latest
-          githubOrg: $ORG_NAME 
+          githubOrg: "$ORG_NAME"
           directory: container-image/packer
 
   centos_base:
@@ -55,7 +55,7 @@ jobs:
         uses: operatehappy/packer-github-actions@master
         with:
           command: fix
-          target: $PACKER_TARGET
+          target: "$PACKER_TARGET"
 
       - name: Validate Packer Template
         uses: operatehappy/packer-github-actions@master
