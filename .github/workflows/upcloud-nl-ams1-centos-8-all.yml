@@ -8,11 +8,8 @@ env:
   REPO_NAME: packer-builds
   IMAGE_NAME: packer
   REGISTRY: ghcr.io
-  IMAGE: "$ORG_NAME/$REPO_NAME/$IMAGE_NAME:$TAG" 
-  IMAGE_URI: "$REGISTRY/$ORG_NAME/$REPO_NAME/$IMAGE_NAME:$TAG" 
   UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
   UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
-  UPCLOUD_ZONE: "nl-ams1"
   PACKER_CONFIG_DIR: /opt
   PACKER_LOG: 1
   PACKER_LOG_PATH: packer-logs
@@ -30,11 +27,12 @@ jobs:
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
-          registry: ghcr.io
-          image: $IMAGE 
+          registry: ${{ env.REGISTRY }}
+          image: ${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}
           tag: latest
-          githubOrg: $ORG_NAME 
+          githubOrg: ${{ env.ORG_NAME }}
           directory: container-image/packer
+          dockerfile: container-image/packer/Dockerfile
 
   centos_base:
     runs-on: ubuntu-latest
@@ -42,7 +40,7 @@ jobs:
     name: 'Upcloud CentOS 8 Base'
 
     env:
-      PACKER_TARGET: "upcloud-$UPCLOUD_ZONE-centos-8-base.json"
+      PACKER_TARGET: ./clouds/upcloud/upcloud-nl-ams1-centos-8-base.json
 
     outputs:
       uuid: ${{ steps.uuid.outputs.uuid }}
@@ -55,24 +53,24 @@ jobs:
         uses: operatehappy/packer-github-actions@master
         with:
           command: fix
-          target: $PACKER_TARGET
+          target: ${{ env.PACKER_TARGET }}
 
       - name: Validate Packer Template
         uses: operatehappy/packer-github-actions@master
         with:
           command: validate
           arguments: -syntax-only
-          target: $PACKER_TARGET
+          target: ${{ env.PACKER_TARGET }}
      
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          registry: $REGISTRY
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GH_PAT }}
 
       - name: Pull image
-        run: docker pull $IMAGE_URI
+        run: docker pull ${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Store SSH keys
         env:
@@ -87,7 +85,7 @@ jobs:
         with:
           command: build
           arguments: "-color=false -on-error=abort"
-          target: $PACKER_TARGET
+          target: ${{ env.PACKER_TARGET }}
 
       - name: Find and export storage UUID
         id: uuid
@@ -101,7 +99,7 @@ jobs:
     name: 'Upcloud CentOS 8 Vault'
 
     env:
-       PACKER_TARGET: "upcloud-$UPCLOUD_ZONE-centos-8-vault.json"
+       PACKER_TARGET: ./clouds/upcloud/upcloud-nl-ams1-centos-8-vault.json
 
     steps:
       - name: Checkout Repository
@@ -111,24 +109,24 @@ jobs:
         uses: operatehappy/packer-github-actions@master
         with:
           command: fix
-          target: $PACKER_TARGET
+          target: ${{ env.PACKER_TARGET }}
 
       - name: Validate Packer Template
         uses: operatehappy/packer-github-actions@master
         with:
           command: validate
           arguments: -syntax-only
-          target: $PACKER_TARGET
+          target: ${{ env.PACKER_TARGET }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          registry: $REGISTRY
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GH_PAT }}
 
       - name: Pull image
-        run: docker pull $IMAGE_URI
+        run: docker pull ${{ env.REGISTRY }}/${{ env.ORG_NAME }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:latest
 
       - name: Store SSH keys
         env:
@@ -143,14 +141,14 @@ jobs:
         with:
           command: build
           arguments: "-color=false -on-error=abort -var STORAGE_UUID=${{ needs.centos_base.outputs.uuid }}"
-          target: $PACKER_TARGET
+          target: ${{ env.PACKER_TARGET }}
 
       - name: Export Storage UUID
-        run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-$UPCLOUD_ZONE-centos-8-vault-image-uuid"
+        run: "cat packer-logs | grep 'upcloud: Private' | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-nl-ams1-centos-8-vault-image-uuid"
 
       - name: Upload UUID as Github artifact 
         uses: actions/upload-artifact@v2
         with:
-          name: upcloud-$UPCLOUD_ZONE-centos-8-vault-image-uuid
-          path: ./upcloud-$UPCLOUD_ZONE-centos-8-vault-image-uuid
+          name: upcloud-nl-ams1-centos-8-vault-image-uuid
+          path: ./upcloud-nl-ams1-centos-8-vault-image-uuid
 
