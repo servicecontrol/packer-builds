@@ -1,5 +1,5 @@
 #!/bin/sh
 
-yum -y update
-yum -y install unzip wget curl cloud-init
+# yum -y update
+# yum -y install unzip wget curl cloud-init
 
