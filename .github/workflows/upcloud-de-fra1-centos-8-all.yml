@@ -28,7 +28,7 @@ jobs:
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
-          registry: ${{ REGISTRY }}
+          registry: ${{ env.REGISTRY }}
           image: "$ORG_NAME/$REPO_NAME/$IMAGE_NAME"
           tag: latest
           githubOrg: ${{ env.ORG_NAME }}
