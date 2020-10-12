@@ -1,6 +1,6 @@
 FROM hashicorp/packer:full
 
-RUN git clone https://github.com/UpCloudLtd/upcloud-packer \ 
+RUN git clone https://github.com/servicecontrol/upcloud-packer.git \ 
   && cd upcloud-packer \
   && go build \
   && mkdir -p /opt/.packer.d/plugins/ \

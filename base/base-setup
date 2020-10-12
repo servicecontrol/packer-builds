@@ -2,5 +2,4 @@
 
 yum -y update
 yum -y install unzip wget curl cloud-init
-echo $PUBLIC_SSH_KEY | tee /root/.ssh/authorized_keys
 

@@ -1,8 +1,7 @@
 {
   "variables": {
     "UPCLOUD_USERNAME": "{{ env `UPCLOUD_API_USER` }}",
-    "UPCLOUD_PASSWORD": "{{ env `UPCLOUD_API_PASSWORD` }}",
-    "PUBLIC_SSH_KEY": "{{ env `PUBLIC_SSH_KEY` }}"
+    "UPCLOUD_PASSWORD": "{{ env `UPCLOUD_API_PASSWORD` }}"
   },
   "builders": [
     {
@@ -12,15 +11,14 @@
       "zone": "de-fra1",
       "storage_uuid": "01000000-0000-4000-8000-000050010400",
       "storage_size": 10,
-      "template_prefix": "centos-8-base"
+      "template_prefix": "centos-8-base",
+      "ssh_private_key": "./id_rsa",                    
+      "ssh_public_key": "./id_rsa.pub"
     }
   ],
   "provisioners": [
     {
       "type": "shell",
-      "environment_vars": [
-	"PUBLIC_SSH_KEY={{ user `PUBLIC_SSH_KEY` }}"
-      ],
       "script": "./base/base-setup" 
     }
   ]

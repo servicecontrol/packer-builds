@@ -66,6 +66,11 @@ jobs:
       - name: Pull image
         run: docker pull ghcr.io/servicecontrol/packer-builds/packer:latest
 
+      - name: Store SSH keys
+        run: |
+          echo ${{ secrets.PUBLIC_SSH_KEY }} > id_rsa.pub
+          echo ${{ secrets.PRIVATE_SSH_KEY }} > id_rsa
+
       - name: Build CentOS VM
         uses: ./.github/actions/packer/
         env:
@@ -116,7 +121,12 @@ jobs:
 
       - name: Pull image
         run: docker pull ghcr.io/servicecontrol/packer-builds/packer:latest
- 
+
+      - name: Store SSH keys
+        run: |
+          echo ${{ secrets.PUBLIC_SSH_KEY }} > id_rsa.pub
+          echo ${{ secrets.PRIVATE_SSH_KEY }} > id_rsa
+
       - name: Build CentOS VM
         uses: ./.github/actions/packer/
         env:
