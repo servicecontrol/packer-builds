@@ -12,7 +12,7 @@
       "zone": "{{ user `UPCLOUD_ZONE` }}",
       "storage_uuid": "01000000-0000-4000-8000-000050010400",
       "storage_size": 10,
-      "template_prefix": "{{ user `ZONE` }}-centos-8-base",
+      "template_prefix": "{{ user `UPCLOUD_ZONE` }}-centos-8-base",
       "ssh_private_keyfile": "./id_rsa",                    
       "ssh_public_keyfile": "./id_rsa.pub"
     }
