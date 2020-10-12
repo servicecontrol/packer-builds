@@ -27,7 +27,14 @@ jobs:
           arguments: -syntax-only
           target: centos-base.json
       - name: echo pwd
-        run: echo $PWD
+        run: | 
+          echo $PWD
+          ls -la
+      - name: echo pwd
+        working-directory: ./
+        run: | 
+          echo $PWD
+          ls -la
 
       # build artifact
       - name: Build Artifact
