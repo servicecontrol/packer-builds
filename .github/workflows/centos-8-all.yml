@@ -49,6 +49,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GH_PAT }}
+
       - name: Pull image
         run: docker pull ghcr.io/servicecontrol/packer-builds/packer:latest
 
@@ -98,6 +99,16 @@ jobs:
           arguments: -syntax-only
           target: upcloud-centos-8-vault.json
 
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GH_PAT }}
+
+      - name: Pull image
+        run: docker pull ghcr.io/servicecontrol/packer-builds/packer:latest
+ 
       - name: Build CentOS VM
         uses: ./.github/actions/packer/
         env:
