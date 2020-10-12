@@ -28,7 +28,7 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'ghcr.io/servicecontrol/packer-builds/packer:latest'
+  image: 'docker://ghcr.io/servicecontrol/packer-builds/packer:latest'
   #  image: ${{ inputs.image }}
  
 branding:
