@@ -2,7 +2,8 @@
   "variables": {
     "UPCLOUD_USERNAME": "{{ env `UPCLOUD_API_USER` }}",
     "UPCLOUD_PASSWORD": "{{ env `UPCLOUD_API_PASSWORD` }}",
-    "PUBLIC_SSH_KEY": "{{ env `PUBLIC_SSH_KEY` }}"
+    "PUBLIC_SSH_KEY": "{{ env `PUBLIC_SSH_KEY` }}",
+    "STORAGE_UUID": "{{ env `STORAGE_UUID` }}"
   },
   "builders": [
     {
@@ -10,7 +11,7 @@
       "username": "{{ user `UPCLOUD_USERNAME` }}",
       "password": "{{ user `UPCLOUD_PASSWORD` }}",
       "zone": "de-fra1",
-      "storage_uuid": "01000000-0000-4000-8000-000050010400",
+      "storage_uuid": "{{ env `STORAGE_UUID` }}",
       "storage_size": 10,
       "template_prefix": "centos-8-vault"
     }
