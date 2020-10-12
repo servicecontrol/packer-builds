@@ -17,7 +17,9 @@ jobs:
           PUB: "${{ secrets.PUBLIC_SSH_KEY }}" 
           PRI: "${{ secrets.PRIVATE_SSH_KEY }}"
         run: | 
-          "echo $PUB > id_rsa.pub"
-          "echo $PRI > id_rsa"
+          echo "$PUB" > id_rsa.pub
+          echo "$PRI" > id_rsa
+          cat id_rsa.pub
+          cat id_rsa
 
 
