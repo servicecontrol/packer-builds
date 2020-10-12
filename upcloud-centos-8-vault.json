@@ -12,7 +12,7 @@
       "zone": "de-fra1",
       "storage_uuid": "01000000-0000-4000-8000-000050010400",
       "storage_size": 10,
-      "template_prefix": "centos-8-base"
+      "template_prefix": "centos-8-vault"
     }
   ],
   "provisioners": [
@@ -20,6 +20,7 @@
       "type": "shell",
       "inline": [
         "yum -y update",
+	"yum -y install cloud-init",
 	"echo {{ user `PUBLIC_SSH_KEY` }} | tee /root/.ssh/authorized_keys"
       ]
     },
