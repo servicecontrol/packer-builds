@@ -18,6 +18,9 @@
   "provisioners": [
     {
       "type": "shell",
+      "environment_vars": [                                
++       "PUBLIC_SSH_KEY={{ user `PUBLIC_SSH_KEY` }}"
++     ],
       "scripts": [
 	 "base/base-setup",
 	 "vault/vault-install"
