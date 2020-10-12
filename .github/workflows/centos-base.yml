@@ -6,7 +6,7 @@ on:
 jobs:
   upcloud:
     runs-on: self-hosted
-    name: packer
+    name: Upcloud: CentOS 8 base image
 
     steps:
       - name: Checkout Repository
