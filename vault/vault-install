@@ -1,10 +1,8 @@
 #!/bin/sh
 
-pwd
-ls -la
-source ./vault/vault-build-config
+# source ./vault/vault-build-config
 
-#VAULT_VERSION="1.4.2+ent"
+VAULT_VERSION="1.5.4+ent"
 cd /tmp/
 curl https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip -o vault.zip
 
