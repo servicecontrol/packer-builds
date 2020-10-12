@@ -7,6 +7,7 @@ jobs:
   packer:
     runs-on: ubuntu-latest
     name: packer
+    
 
     steps:
       - name: Checkout Repository
@@ -31,7 +32,7 @@ jobs:
           echo $PWD
           ls -la
       - name: echo pwd
-        working-directory: ./
+        working-directory: /
         run: | 
           echo $PWD
           ls -la
