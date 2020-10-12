@@ -31,12 +31,15 @@ jobs:
           UPCLOUD_API_PASSWORD: ${{ secrets.UPCLOUD_API_PASSWORD }}
           UPCLOUD_API_USER: ${{ secrets.UPCLOUD_API_USER }}
           PACKER_CONFIG_DIR: /opt
+          PACKER_LOG: 1
+          PACKER_LOG_PATH: packer-logs
         with:
           command: build
           arguments: "-color=false -on-error=abort"
           target: centos-base-upcloud.json
-      - run: echo 01a5d2db-dd46-4203-9aef-0832a59d371f > 01a5d2db-dd46-4203-9aef-0832a59d371f 
+      - name: Export Storage UUID
+        run: cat packer-logs | grep "upcloud: Private" | cut -d ' ' -f 9 | cut -d ',' -f 1 > upcloud-centos-base-image-uuid
       - uses: actions/upload-artifact@v2
         with:
-          name: 01a5d2db-dd46-4203-9aef-0832a59d371f
-          path: 01a5d2db-dd46-4203-9aef-0832a59d371f
+          name: upcloud-centos-base-image-uuid
+          path: ./upcloud-centos-base-image-uuid
