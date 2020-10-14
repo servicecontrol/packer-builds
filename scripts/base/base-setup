@@ -17,7 +17,7 @@ cp cloudinit/sources/helpers/upcloud.py /usr/lib/python3.6/site-packages/cloudin
 cp cloudinit/apport.py /usr/lib/python3.6/site-packages/cloudinit/apport.py
 cp cloudinit/settings.py /usr/lib/python3.6/site-packages/cloudinit/settings.py
 
-cd..
+cd ..
 
 rm -rf cloud-init
 
