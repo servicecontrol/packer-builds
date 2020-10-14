@@ -1,9 +1,9 @@
 #!/bin/sh
 
-yum -y update
+#yum -y update
 yum -y install unzip wget curl cloud-init git
 
-git clone git@github.com:mkaesz/cloud-init.git
+git clone https://github.com/mkaesz/cloud-init.git
 
 cd cloud-init
 
