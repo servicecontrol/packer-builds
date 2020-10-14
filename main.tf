@@ -6,7 +6,6 @@ terraform {
   }
   required_version = ">= 0.13"
 }
-
 provider "upcloud" {
   # You need to set UpCloud credentials in shell environment variable
   # using .bashrc, .zshrc or similar
@@ -16,9 +15,10 @@ provider "upcloud" {
 
 resource "upcloud_server" "test" {
   zone     = "de-fra1"
-  hostname = "test"
+  hostname = "test2"
+  metadata = true
 
-  cpu = "2"
+  cpu = "1"
   mem = "1024"
 
   network_interface {
@@ -31,13 +31,21 @@ resource "upcloud_server" "test" {
 
   storage_devices {
     # You can use both storage template names and UUIDs
-    size    = 50
+    size    = 20
     action  = "clone"
     tier    = "maxiops"
-    storage = "01505166-f508-4137-98c3-e69f831c5eb6"
+    storage = "015b39c2-0fc6-4956-9c2e-d61de359151d"
   }
  
-  user_data = "#!/bin/sh\ntouch /blub"
+  user_data = <<-EOT
+#cloud-config
+write_files:
+- encoding: b64
+  content: CiMgVGhpcyBmaWxlIGNvbnRyb2xzIHRoZSBzdGF0ZSBvZiBTRUxpbnV4...
+  owner: root:root
+  path: /root/asd
+  permissions: '0644'
+EOT
 }
 
 output "Public_ip" {

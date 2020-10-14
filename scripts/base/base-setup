@@ -1,7 +1,12 @@
 #!/bin/sh
 
-#yum -y update
+yum -y update
 yum -y install unzip wget curl cloud-init git
+
+
+#### UGLY, UGLY hack
+#### I implemented the UpCLoud cloud-init support by myself and haven't pushed it 
+#### back to the main repo, neither do I want to create my own cloud-init distribution...
 
 git clone https://github.com/mkaesz/cloud-init.git
 
@@ -12,14 +17,20 @@ cp cloudinit/sources/helpers/upcloud.py /usr/lib/python3.6/site-packages/cloudin
 cp cloudinit/apport.py /usr/lib/python3.6/site-packages/cloudinit/apport.py
 cp cloudinit/settings.py /usr/lib/python3.6/site-packages/cloudinit/settings.py
 
+cd..
+
+rm -rf cloud-init
+
+cat > /etc/cloud/cloud.cfg.d/99-warnings.cfg << EOF
+#cloud-config                                                          
+datasource_list: [ UpCloud, None ]
+datasource:
+ UpCloud:
+warnings:                                                             
+  dsid_missing_source: off
+EOF
+
 systemctl enable cloud-init-local.service
-systemctl start cloud-init-local.service
-
 systemctl enable cloud-init.service
-systemctl start cloud-init.service
-
 systemctl enable cloud-config.service
-systemctl start cloud-config.service
-
 systemctl enable cloud-final.service
-systemctl start cloud-final.service
