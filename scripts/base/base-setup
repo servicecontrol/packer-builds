@@ -7,10 +7,10 @@ git clone https://github.com/mkaesz/cloud-init.git
 
 cd cloud-init
 
-cp cloud-init/sources/DataSourceUpCloud.py /usr/lib/python3.6/site-packages/cloudinit/sources
-cp cloud-init/sources/helpers/upcloud.py /usr/lib/python3.6/site-packages/cloudinit/sources/helpers
-cp cloud-init/apport.py /usr/lib/python3.6/site-packages/cloudinit/apport.py
-cp cloud-init/setting.py /usr/lib/python3.6/site-packages/cloudinit/setting.py
+cp cloudinit/sources/DataSourceUpCloud.py /usr/lib/python3.6/site-packages/cloudinit/sources
+cp cloudinit/sources/helpers/upcloud.py /usr/lib/python3.6/site-packages/cloudinit/sources/helpers
+cp cloudinit/apport.py /usr/lib/python3.6/site-packages/cloudinit/apport.py
+cp cloudinit/setting.py /usr/lib/python3.6/site-packages/cloudinit/setting.py
 
 systemctl enable cloud-init-local.service
 systemctl start cloud-init-local.service
