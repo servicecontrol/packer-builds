@@ -10,7 +10,7 @@ cd cloud-init
 cp cloudinit/sources/DataSourceUpCloud.py /usr/lib/python3.6/site-packages/cloudinit/sources
 cp cloudinit/sources/helpers/upcloud.py /usr/lib/python3.6/site-packages/cloudinit/sources/helpers
 cp cloudinit/apport.py /usr/lib/python3.6/site-packages/cloudinit/apport.py
-cp cloudinit/setting.py /usr/lib/python3.6/site-packages/cloudinit/setting.py
+cp cloudinit/settings.py /usr/lib/python3.6/site-packages/cloudinit/settings.py
 
 systemctl enable cloud-init-local.service
 systemctl start cloud-init-local.service
