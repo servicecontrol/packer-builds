@@ -12,3 +12,14 @@ cp cloud-init/sources/helpers/upcloud.py /usr/lib/python3.6/site-packages/cloudi
 cp cloud-init/apport.py /usr/lib/python3.6/site-packages/cloudinit/apport.py
 cp cloud-init/setting.py /usr/lib/python3.6/site-packages/cloudinit/setting.py
 
+systemctl enable cloud-init-local.service
+systemctl start cloud-init-local.service
+
+systemctl enable cloud-init.service
+systemctl start cloud-init.service
+
+systemctl enable cloud-config.service
+systemctl start cloud-config.service
+
+systemctl enable cloud-final.service
+systemctl start cloud-final.service
